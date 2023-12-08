@@ -5,11 +5,6 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import user_passes_test, permission_required
-from server.models import User
-from django.contrib.auth.models import User as BaseUser
-from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -79,28 +74,3 @@ def files_path(request, path: str):
 @user_passes_test(lambda u: u.is_superuser) 
 def files(request):
     return ServerView("server/files.html").as_view()(request)
-
-class CreateUser(LoginRequiredMixin, CreateView):
-    model = User
-    fields = ['username', 'email', 'password']
-    template_name = 'django_registration/registration_form.html'
-    success_url = reverse_lazy('user_list')
-
-class UpdateUser(LoginRequiredMixin, UpdateView):
-    model = User
-    fields = ['username', 'email', 'password']
-    template_name = 'update_user.html'
-    success_url = reverse_lazy('user_list')
-
-class DeleteUser(LoginRequiredMixin, DeleteView):
-    model = User
-    template_name = 'delete_user.html'
-    success_url = reverse_lazy('user_list')
-
-def user_list(request):
-    users = [
-        {"username": "admin",},
-        {"username": "test",}
-    ]
-    print(users)
-    return ServerView('server/user_list.html').as_view()(request, users=users)
