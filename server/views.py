@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import user_passes_test
+from django_ratelimit.decorators import ratelimit
 
 # Create your views here.
 
@@ -46,12 +47,14 @@ class ServerView():
     def as_view(self):
         return TemplateView.as_view(template_name=self.template_name)
 
+@ratelimit(key='ip', rate='100/h')
 def index(request):
     return ServerView("server/index.html").as_view()(request, ip=get_client_ip(request))
 
 def one(request):
     return ServerView("server/one.html").as_view()(request)
 
+@ratelimit(key='ip', rate='2/h')
 def two(request):
     return ServerView("server/two.html").as_view()(request)
 
