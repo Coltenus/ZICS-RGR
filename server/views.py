@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
 import os
-from django.contrib.auth.decorators import user_passes_test, permission_required
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 
@@ -49,7 +49,6 @@ class ServerView():
 def index(request):
     return ServerView("server/index.html").as_view()(request, ip=get_client_ip(request))
 
-@permission_required('server.can_view_something')
 def one(request):
     return ServerView("server/one.html").as_view()(request)
 
