@@ -10,6 +10,7 @@ from django.contrib.auth.models import User as BaseUser
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django_ratelimit.decorators import ratelimit
 
 # Create your views here.
 
@@ -51,6 +52,7 @@ class ServerView():
     def as_view(self):
         return TemplateView.as_view(template_name=self.template_name)
 
+@ratelimit(key='ip', rate='100/h')
 def index(request):
     return ServerView("server/index.html").as_view()(request, ip=get_client_ip(request))
 
@@ -58,6 +60,7 @@ def index(request):
 def one(request):
     return ServerView("server/one.html").as_view()(request)
 
+@ratelimit(key='ip', rate='2/h')
 def two(request):
     return ServerView("server/two.html").as_view()(request)
 
