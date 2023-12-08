@@ -5,6 +5,8 @@
 server/__pycache__
 rgr/__pycache__
 staticfiles
+cert.pem
+key.pem
 
 # C extensions
 *.so
