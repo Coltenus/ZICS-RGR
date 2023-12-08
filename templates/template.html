@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>{% block title %}RGR{% endblock %}</title>
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"  type="text/css" />
+    </head>
+  <body>
+    <main>
+      {% block home %}    
+        <form action="/">
+          <input type="submit" value="Home" />
+        </form>
+      {% endblock %}
+      {% block auth %}
+        {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}. <a href="{% url 'logout' %}">Quit</a></p>
+        {% else %}
+        <p>You are not logged in. <a href="{% url 'login' %}">Login</a></p>
+        <p>Don't have an account? <a href="/accounts/register/">Register</a></p>
+        {% endif %}
+      {% endblock %}
+      {% block content %}
+      {% endblock %}
+    </main>
+  </body>
+</html>

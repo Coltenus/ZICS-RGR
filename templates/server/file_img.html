@@ -1,0 +1,13 @@
+{% extends "template.html" %}
+
+{% block title %}File{% endblock %}
+
+{% load static %}
+{% block content %}
+<img src="{% static filename %}" alt="img">
+{% if user.is_staff %}
+{% endif %}
+{% endblock %}
+
+{% block auth %}
+{% endblock %}

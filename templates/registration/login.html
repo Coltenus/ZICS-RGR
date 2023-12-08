@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+
+{% block content %}
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>
+<form action="/accounts/register/">
+  <input type="submit" value="Register" />
+</form>
+{% endblock %}
+
+{% block auth %}
+{% endblock %}

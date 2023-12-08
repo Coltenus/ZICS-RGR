@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+
+{% block content %}
+<h2>Failed</h2>
+{% csrf_token %}
+{{ form.as_p }}
+<form action="/accounts/login/">
+  <input type="submit" value="Login" />
+</form>
+<form action="/accounts/register/">
+  <input type="submit" value="Register" />
+</form>
+{% endblock %}
+
+{% block auth %}
+{% endblock %}
